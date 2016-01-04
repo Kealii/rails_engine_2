@@ -4,10 +4,10 @@
     JSON
 
 # Database
-    Postgresql
-    You can find the data for this application [here](https://github.com/turingschool-examples/sales_engine/tree/master/data).
-    Once you have cloned the data, be sure to move it into the 'app/assets/data' directory and then use rake tasks to import
-    those files into the DB.
+Postgresql
+You can find the data for this application [here.](https://github.com/turingschool-examples/sales_engine/tree/master/data)
+Once you have cloned the data, be sure to move it into the 'app/assets/data' directory and then use rake tasks to import
+those files into the DB.
 
 # Test Suite
     RSpec
