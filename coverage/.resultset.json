@@ -1,0 +1,39 @@
+{
+  "RSpec": {
+    "coverage": {
+      "/Users/michael_wong/Turing/Module3 Repeating/rails_engine_2/app/controllers/api/v1/customers_controller.rb": [
+        1,
+        null
+      ],
+      "/Users/michael_wong/Turing/Module3 Repeating/rails_engine_2/app/controllers/application_controller.rb": [
+        1,
+        null
+      ],
+      "/Users/michael_wong/Turing/Module3 Repeating/rails_engine_2/app/models/customer.rb": [
+        1,
+        null
+      ],
+      "/Users/michael_wong/Turing/Module3 Repeating/rails_engine_2/app/models/invoice_item.rb": [
+        1,
+        null
+      ],
+      "/Users/michael_wong/Turing/Module3 Repeating/rails_engine_2/app/models/invoice.rb": [
+        1,
+        null
+      ],
+      "/Users/michael_wong/Turing/Module3 Repeating/rails_engine_2/app/models/item.rb": [
+        1,
+        null
+      ],
+      "/Users/michael_wong/Turing/Module3 Repeating/rails_engine_2/app/models/merchant.rb": [
+        1,
+        null
+      ],
+      "/Users/michael_wong/Turing/Module3 Repeating/rails_engine_2/app/models/transaction.rb": [
+        1,
+        null
+      ]
+    },
+    "timestamp": 1451946349
+  }
+}
