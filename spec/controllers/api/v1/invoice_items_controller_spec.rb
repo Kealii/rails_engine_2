@@ -3,6 +3,9 @@ require 'rails_helper'
 RSpec.describe Api::V1::InvoiceItemsController, type: :controller do
 
   let!(:invoice_item1) { FactoryGirl.create(:invoice_item) }
+  let!(:invoice_item2) { FactoryGirl.create(:invoice_item,
+                                            item: invoice_item1.item,
+                                            invoice: invoice_item1.invoice) }
 
   describe 'GET #index' do
     it 'returns the correct number of invoice items' do
@@ -61,6 +64,44 @@ RSpec.describe Api::V1::InvoiceItemsController, type: :controller do
 
       expect(response).to have_http_status :success
       expect(json_response['unit_price']).to eq invoice_item1.unit_price.to_s
+    end
+  end
+
+  describe 'GET #find_all' do
+    it 'returns all invoice items by item id' do
+      get :find_all, item_id: invoice_item1.item_id
+
+      expect(response).to have_http_status :success
+      expect(json_response.class).to eq Array
+      expect(json_response.count).to eq 2
+      expect(json_response.first['item_id']).to eq invoice_item1.item_id
+    end
+
+    it 'returns all invoice items by invoice id' do
+      get :find_all, invoice_id: invoice_item1.invoice_id
+
+      expect(response).to have_http_status :success
+      expect(json_response.class).to eq Array
+      expect(json_response.count).to eq 2
+      expect(json_response.first['invoice_id']).to eq invoice_item1.invoice_id
+    end
+
+    it 'returns all invoice items by quantity' do
+      get :find_all, quantity: invoice_item1.quantity
+
+      expect(response).to have_http_status :success
+      expect(json_response.class).to eq Array
+      expect(json_response.count).to eq 2
+      expect(json_response.first['quantity']).to eq invoice_item1.quantity
+    end
+
+    it 'returns all invoice items by unit price' do
+      get :find_all, unit_price: invoice_item1.unit_price
+
+      expect(response).to have_http_status :success
+      expect(json_response.class).to eq Array
+      expect(json_response.count).to eq 2
+      expect(json_response.first['unit_price']).to eq invoice_item1.unit_price.to_s
     end
   end
 end
