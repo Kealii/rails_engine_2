@@ -13,7 +13,12 @@ RSpec.configure do |config|
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
   config.use_transactional_fixtures = true
   config.infer_spec_type_from_file_location!
+  config.before :each do
+    request.headers["accept"] = 'application/json'
+  end
 end
+
+
 
 def json_response
   JSON.parse(response.body)
