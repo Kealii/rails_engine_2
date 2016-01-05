@@ -23,4 +23,20 @@ RSpec.describe Api::V1::MerchantsController, type: :controller do
       expect(json_response['name']).to eq merchant1.name
     end
   end
+
+  describe 'GET #find' do
+    it 'returns the correct merchant by id' do
+      get :find, id: merchant1.id, format: :json
+
+      expect(response).to have_http_status :success
+      expect(json_response['id']).to eq merchant1.id
+    end
+
+    it 'returns the correct merchant by name' do
+      get :find, name: merchant1.name, format: :json
+
+      expect(response).to have_http_status :success
+      expect(json_response['name']).to eq merchant1.name
+    end
+  end
 end

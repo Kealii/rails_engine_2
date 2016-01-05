@@ -25,7 +25,11 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :merchants,     only: [:index, :show]
+      resources :merchants,     only: [:index, :show] do
+        collection do
+          get :find
+        end
+      end
       resources :transactions,  only: [:index, :show]
     end
   end
