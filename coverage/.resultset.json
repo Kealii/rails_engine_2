@@ -3,9 +3,52 @@
     "coverage": {
       "/Users/michael_wong/Turing/Module3 Repeating/rails_engine_2/app/controllers/api/v1/customers_controller.rb": [
         1,
+        1,
+        1,
+        null,
+        null,
+        1,
+        1,
+        null,
         null
       ],
       "/Users/michael_wong/Turing/Module3 Repeating/rails_engine_2/app/controllers/application_controller.rb": [
+        1,
+        null,
+        1,
+        1,
+        null,
+        1,
+        1,
+        null
+      ],
+      "/Users/michael_wong/Turing/Module3 Repeating/rails_engine_2/lib/application_responder.rb": [
+        1,
+        1,
+        1,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "/Users/michael_wong/Turing/Module3 Repeating/rails_engine_2/app/controllers/api/v1/invoice_items_controller.rb": [
+        1,
+        null
+      ],
+      "/Users/michael_wong/Turing/Module3 Repeating/rails_engine_2/app/controllers/api/v1/invoices_controller.rb": [
+        1,
+        null
+      ],
+      "/Users/michael_wong/Turing/Module3 Repeating/rails_engine_2/app/controllers/api/v1/items_controller.rb": [
+        1,
+        null
+      ],
+      "/Users/michael_wong/Turing/Module3 Repeating/rails_engine_2/app/controllers/api/v1/merchants_controller.rb": [
+        1,
+        null
+      ],
+      "/Users/michael_wong/Turing/Module3 Repeating/rails_engine_2/app/controllers/api/v1/transactions_controller.rb": [
         1,
         null
       ],
@@ -34,6 +77,6 @@
         null
       ]
     },
-    "timestamp": 1451946349
+    "timestamp": 1451970815
   }
 }
