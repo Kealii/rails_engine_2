@@ -26,7 +26,7 @@ RSpec.describe Api::V1::InvoiceItemsController, type: :controller do
   end
 
   describe 'GET #find' do
-    it 'returns an invoice item by id' do
+    it 'returns the correct invoice item by id' do
       get :find, id: invoice_item1.id, format: :json
 
       expect(response).to have_http_status :success
