@@ -19,6 +19,7 @@ RSpec.describe Api::V1::CustomersController, type: :controller do
       get :show, id: customer1.id, format: :json
 
       expect(response).to have_http_status :success
+      expect(json_response['id']).to eq customer1.id
       expect(json_response['first_name']).to eq customer1.first_name
       expect(json_response['last_name']).to  eq customer1.last_name
     end
