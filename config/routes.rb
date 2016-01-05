@@ -30,7 +30,13 @@ Rails.application.routes.draw do
           get :find
         end
       end
-      resources :transactions,  only: [:index, :show]
+
+      resources :transactions,  only: [:index, :show] do
+        collection do
+          get :find
+        end
+      end
+
     end
   end
 end
