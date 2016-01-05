@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Api::V1::CustomersController, type: :controller do
 
   let!(:customer1) { FactoryGirl.create(:customer) }
+  let!(:customer2) { FactoryGirl.create(:customer) }
 
   describe 'GET #index' do
     it 'returns the correct number of customers' do
@@ -46,6 +47,26 @@ RSpec.describe Api::V1::CustomersController, type: :controller do
 
       expect(response).to have_http_status :success
       expect(json_response['last_name']).to eq customer1.last_name
+    end
+  end
+
+  describe 'GET #find_all' do
+    it 'returns all customers by first name' do
+      get :find_all, first_name: customer1.first_name, format: :json
+
+      expect(response).to have_http_status :success
+      expect(json_response.class).to eq Array
+      expect(json_response.count).to eq 2
+      expect(json_response.first['first_name']).to eq customer2.first_name
+    end
+
+    it 'returns a customer by last name' do
+      get :find_all, last_name: customer1.last_name, format: :json
+
+      expect(response).to have_http_status :success
+      expect(json_response.class).to eq Array
+      expect(json_response.count).to eq 2
+      expect(json_response.first['last_name']).to eq customer2.last_name
     end
   end
 end

@@ -4,6 +4,7 @@ Rails.application.routes.draw do
       resources :customers, only: [:index, :show] do
         collection do
           get :find
+          get :find_all
         end
       end
 
