@@ -3,6 +3,9 @@ require 'rails_helper'
 RSpec.describe Api::V1::InvoicesController, type: :controller do
 
   let!(:invoice1) { FactoryGirl.create(:invoice) }
+  let!(:invoice2) { FactoryGirl.create(:invoice,
+                                       customer: invoice1.customer,
+                                       merchant: invoice1.merchant) }
 
   describe 'GET #index' do
     it 'returns the correct number of invoices' do
@@ -53,5 +56,35 @@ RSpec.describe Api::V1::InvoicesController, type: :controller do
       expect(response).to have_http_status :success
       expect(json_response['status']).to eq invoice1.status
     end
+  end
+
+  describe 'GET #find_all' do
+    it 'returns all invoices by customer id' do
+      get :find_all, customer_id: invoice1.customer_id
+
+      expect(response).to have_http_status :success
+      expect(json_response.class).to eq Array
+      expect(json_response.count).to eq 2
+      expect(json_response.first['customer_id']).to eq invoice1.customer_id
+    end
+
+    it 'returns all invoices by merchant id' do
+      get :find_all, merchant_id: invoice1.merchant_id
+
+      expect(response).to have_http_status :success
+      expect(json_response.class).to eq Array
+      expect(json_response.count).to eq 2
+      expect(json_response.first['merchant_id']).to eq invoice1.merchant_id
+    end
+
+    it 'returns all invoices by status' do
+      get :find_all, status_id: invoice1.status
+
+      expect(response).to have_http_status :success
+      expect(json_response.class).to eq Array
+      expect(json_response.count).to eq 2
+      expect(json_response.first['status']).to eq invoice1.status
+    end
+
   end
 end
