@@ -18,7 +18,13 @@ Rails.application.routes.draw do
           get :find
         end
       end
-      resources :items,         only: [:index, :show]
+
+      resources :items,         only: [:index, :show] do
+        collection do
+          get :find
+        end
+      end
+
       resources :merchants,     only: [:index, :show]
       resources :transactions,  only: [:index, :show]
     end
