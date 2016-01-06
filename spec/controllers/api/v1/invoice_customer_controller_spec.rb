@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Api::V1::InvoiceCustomersController do
+describe Api::V1::InvoiceCustomerController do
 
   describe '#index' do
     it 'returns the customer for an invoice' do
