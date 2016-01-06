@@ -37,6 +37,9 @@ Rails.application.routes.draw do
 
       resources :merchants,     only: [:index, :show] do
         resources :items, only: [:index], controller: :merchant_items
+        resources :invoices, only: [:index], controller: :merchant_invoices
+        get :revenue
+
         collection do
           get :find
           get :find_all

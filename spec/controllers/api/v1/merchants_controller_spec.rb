@@ -7,6 +7,21 @@ RSpec.describe Api::V1::MerchantsController, type: :controller do
   let!(:merchant3) { FactoryGirl.create(:merchant,
                                         name: 'Different Merchant') }
 
+  def revenue_setup
+    item = FactoryGirl.create(:item, merchant: merchant1)
+    invoice = FactoryGirl.create(:invoice, merchant: merchant1)
+    FactoryGirl.create(:invoice_item, item: item, quantity: 3, unit_price: 2, invoice: invoice)
+    FactoryGirl.create(:transaction, result: 'success', invoice: invoice)
+
+    invoice = FactoryGirl.create(:invoice, merchant: merchant1)
+    FactoryGirl.create(:invoice_item, item: item, quantity: 3, unit_price: 2, invoice: invoice)
+    FactoryGirl.create(:transaction, result: 'expired', invoice: invoice)
+
+    invoice = FactoryGirl.create(:invoice, merchant: merchant2)
+    FactoryGirl.create(:invoice_item, item: item, quantity: 3, unit_price: 2, invoice: invoice)
+    FactoryGirl.create(:transaction, result: 'success', invoice: invoice)
+  end
+
   describe 'GET #index' do
     it 'returns the correct number of merchants' do
       number_of_merchants = Merchant.count
@@ -60,6 +75,15 @@ RSpec.describe Api::V1::MerchantsController, type: :controller do
 
       expect(response).to have_http_status :success
       expect(json_response.first['id']).to_not eq nil
+    end
+  end
+
+  describe 'GET #revenue' do
+    it 'returns the the total revenue for a merchant' do
+      revenue_setup
+      get :revenue, merchant_id: merchant1.id
+
+      expect(json_response['revenue']).to eq '0.06'
     end
   end
 end

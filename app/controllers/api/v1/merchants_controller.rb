@@ -19,6 +19,10 @@ class Api::V1::MerchantsController < ApplicationController
     respond_with Merchant.limit(1).order('RANDOM()')
   end
 
+  def revenue
+    respond_with( { revenue: Merchant.find(params[:merchant_id]).revenue } )
+  end
+
   private
 
   def merchant_params
