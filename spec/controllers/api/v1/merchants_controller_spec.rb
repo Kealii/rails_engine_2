@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Api::V1::MerchantsController, type: :controller do
 
   let!(:merchant1) { FactoryGirl.create(:merchant) }
+  let!(:merchant2) { FactoryGirl.create(:merchant) }
 
   describe 'GET #index' do
     it 'returns the correct number of merchants' do
@@ -37,6 +38,17 @@ RSpec.describe Api::V1::MerchantsController, type: :controller do
 
       expect(response).to have_http_status :success
       expect(json_response['name']).to eq merchant1.name
+    end
+  end
+
+  describe 'GET #find_all' do
+    it 'returns all merchants by name' do
+      get :find_all, name: merchant1.name
+
+      expect(response).to have_http_status :success
+      expect(json_response.class).to eq Array
+      expect(json_response.count).to eq 2
+      expect(json_response.first['name']).to eq merchant1.name
     end
   end
 end

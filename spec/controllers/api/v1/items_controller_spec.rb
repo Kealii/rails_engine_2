@@ -91,7 +91,7 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
       expect(json_response.first['unit_price']).to eq item1.unit_price.to_s
     end
 
-    it 'returns all itembs by merchant id' do
+    it 'returns all items by merchant id' do
       get :find_all, merchant_id: item1.merchant_id
 
       expect(response).to have_http_status :success
