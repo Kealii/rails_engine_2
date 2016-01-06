@@ -4,6 +4,10 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
 
   let!(:item1) { FactoryGirl.create(:item) }
   let!(:item2) { FactoryGirl.create(:item, merchant: item1.merchant) }
+  let!(:item3) { FactoryGirl.create(:item,
+                                    name: 'Different',
+                                    description: 'Item',
+                                    unit_price: 54321) }
 
   describe 'GET #index' do
     it 'returns the correct number of items' do

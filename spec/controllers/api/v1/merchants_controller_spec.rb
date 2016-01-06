@@ -4,6 +4,8 @@ RSpec.describe Api::V1::MerchantsController, type: :controller do
 
   let!(:merchant1) { FactoryGirl.create(:merchant) }
   let!(:merchant2) { FactoryGirl.create(:merchant) }
+  let!(:merchant3) { FactoryGirl.create(:merchant,
+                                        name: 'Different Merchant') }
 
   describe 'GET #index' do
     it 'returns the correct number of merchants' do

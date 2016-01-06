@@ -4,6 +4,9 @@ RSpec.describe Api::V1::CustomersController, type: :controller do
 
   let!(:customer1) { FactoryGirl.create(:customer) }
   let!(:customer2) { FactoryGirl.create(:customer) }
+  let!(:customer3) { FactoryGirl.create(:customer,
+                                        first_name: 'Different',
+                                        last_name: 'Customer') }
 
   describe 'GET #index' do
     it 'returns the correct number of customers' do

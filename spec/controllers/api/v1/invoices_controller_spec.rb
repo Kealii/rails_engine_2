@@ -6,6 +6,7 @@ RSpec.describe Api::V1::InvoicesController, type: :controller do
   let!(:invoice2) { FactoryGirl.create(:invoice,
                                        customer: invoice1.customer,
                                        merchant: invoice1.merchant) }
+  let!(:invoice3) { FactoryGirl.create(:invoice, status: 'Different') }
 
   describe 'GET #index' do
     it 'returns the correct number of invoices' do
@@ -78,7 +79,7 @@ RSpec.describe Api::V1::InvoicesController, type: :controller do
     end
 
     it 'returns all invoices by status' do
-      get :find_all, status_id: invoice1.status
+      get :find_all, status: invoice1.status
 
       expect(response).to have_http_status :success
       expect(json_response.class).to eq Array

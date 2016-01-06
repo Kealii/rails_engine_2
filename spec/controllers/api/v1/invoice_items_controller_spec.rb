@@ -4,8 +4,11 @@ RSpec.describe Api::V1::InvoiceItemsController, type: :controller do
 
   let!(:invoice_item1) { FactoryGirl.create(:invoice_item) }
   let!(:invoice_item2) { FactoryGirl.create(:invoice_item,
-                                            item: invoice_item1.item,
+                                            item:    invoice_item1.item,
                                             invoice: invoice_item1.invoice) }
+  let!(:invoice_item3) { FactoryGirl.create(:invoice_item,
+                                            quantity:   1,
+                                            unit_price: 54321) }
 
   describe 'GET #index' do
     it 'returns the correct number of invoice items' do

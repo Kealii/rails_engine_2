@@ -5,6 +5,9 @@ RSpec.describe Api::V1::TransactionsController, type: :controller do
   let!(:transaction1) { FactoryGirl.create(:transaction) }
   let!(:transaction2) { FactoryGirl.create(:transaction,
                                            invoice: transaction1.invoice) }
+  let!(:transaction3) { FactoryGirl.create(:transaction,
+                                           credit_card_number: '1234',
+                                           result: 'pending') }
 
   describe 'GET #index' do
     it 'returns the correct number of transactions' do
