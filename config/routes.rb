@@ -15,7 +15,6 @@ Rails.application.routes.draw do
       resources :invoice_items, only: [:index, :show] do
         resources :invoice,     only: [:index], controller: :invoice_items_invoice
         resources :item,        only: [:index], controller: :invoice_items_item
-
         collection do
           get :find
           get :find_all
@@ -50,7 +49,6 @@ Rails.application.routes.draw do
         resources :items,    only: [:index], controller: :merchant_items
         resources :invoices, only: [:index], controller: :merchant_invoices
         get :revenue
-
         collection do
           get :find
           get :find_all
