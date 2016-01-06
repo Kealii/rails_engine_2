@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1, defaults: { format: :json } do
+
       resources :customers, only: [:index, :show] do
         collection do
           get :find
@@ -34,6 +35,7 @@ Rails.application.routes.draw do
       end
 
       resources :merchants,     only: [:index, :show] do
+        resources :items, only: [:index], controller: :merchant_items
         collection do
           get :find
           get :find_all
@@ -48,7 +50,6 @@ Rails.application.routes.draw do
           get :random
         end
       end
-
     end
   end
 end

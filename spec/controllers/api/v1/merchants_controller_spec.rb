@@ -62,5 +62,4 @@ RSpec.describe Api::V1::MerchantsController, type: :controller do
       expect(json_response.first['id']).to_not eq nil
     end
   end
-
 end
