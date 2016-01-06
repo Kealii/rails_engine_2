@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     namespace :v1, defaults: { format: :json } do
 
       resources :customers, only: [:index, :show] do
+        resources :invoices, only: [:index], controller: :customers_invoices
         collection do
           get :find
           get :find_all
