@@ -12,7 +12,6 @@ RSpec.describe Api::V1::ItemsInvoiceItemsController, type: :controller do
       get :index, item_id: item.id
       expect(json_response.count).to eq 2
       expect(json_response.first['item_id']).to eq item.id
-      puts json_response
     end
   end
 
