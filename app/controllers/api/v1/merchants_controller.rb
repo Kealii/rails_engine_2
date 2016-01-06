@@ -20,7 +20,7 @@ class Api::V1::MerchantsController < ApplicationController
   end
 
   def revenue
-    respond_with( { revenue: Merchant.find(params[:merchant_id]).revenue } )
+    respond_with Merchant.find(params[:merchant_id]).revenue
   end
 
   private

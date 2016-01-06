@@ -4,7 +4,7 @@ class Merchant < ActiveRecord::Base
 
   def revenue
     #TODO unit test me prease :)
-    invoices.successful.joins(:invoice_items).sum("quantity * unit_price")
+    { revenue: invoices.successful.joins(:invoice_items).sum("quantity * unit_price") }
   end
 
 end
