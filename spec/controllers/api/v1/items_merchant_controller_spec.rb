@@ -6,10 +6,9 @@ RSpec.describe Api::V1::ItemsMerchantController, type: :controller do
     it 'returns the merchant of the item' do
       FactoryGirl.create(:merchant)
       merchant = FactoryGirl.create(:merchant)
-      item = FactoryGirl.create(:item, merchant: merchant)
+      item     = FactoryGirl.create(:item, merchant: merchant)
       get :index, item_id: item.id
 
-      puts json_response
       expect(json_response.class).to eq Hash
       expect(json_response['id']).to eq merchant.id
     end
