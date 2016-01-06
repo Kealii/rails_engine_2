@@ -45,6 +45,7 @@ Rails.application.routes.draw do
         collection do
           get :find
           get :find_all
+          get :random
         end
       end
 

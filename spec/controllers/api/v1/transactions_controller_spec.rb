@@ -88,4 +88,13 @@ RSpec.describe Api::V1::TransactionsController, type: :controller do
       expect(json_response.first['result']).to eq transaction1.result
     end
   end
+
+  describe 'GET #random' do
+    it 'returns a random transaction' do
+      get :random
+
+      expect(response).to have_http_status :success
+      expect(json_response.first['id']).to_not eq nil
+    end
+  end
 end
