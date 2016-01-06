@@ -11,6 +11,7 @@ describe Api::V1::InvoiceTransactionsController do
       get :index, invoice_id: invoice.id
 
       expect(json_response.count).to eq 2
+      expect(json_response.first['invoice_id']).to eq invoice.id
     end
   end
 end
