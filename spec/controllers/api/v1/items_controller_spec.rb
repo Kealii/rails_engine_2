@@ -105,4 +105,13 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
     end
   end
 
+  describe 'GET #random' do
+    it 'returns a random item' do
+      get :random
+
+      expect(response).to have_http_status :success
+      expect(json_response.first['id']).to_not eq nil
+    end
+  end
+
 end

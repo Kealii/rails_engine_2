@@ -86,6 +86,14 @@ RSpec.describe Api::V1::InvoicesController, type: :controller do
       expect(json_response.count).to eq 2
       expect(json_response.first['status']).to eq invoice1.status
     end
+  end
 
+  describe 'GET #random' do
+    it 'returns a random invoice' do
+      get :random
+
+      expect(response).to have_http_status :success
+      expect(json_response.first['id']).to_not eq nil
+    end
   end
 end
