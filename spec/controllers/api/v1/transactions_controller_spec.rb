@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe Api::V1::TransactionsController, type: :controller do
 
   let!(:transaction1) { FactoryGirl.create(:transaction) }
+  let!(:transaction2) { FactoryGirl.create(:transaction,
+                                           invoice: transaction1.invoice) }
 
   describe 'GET #index' do
     it 'returns the correct number of transactions' do
@@ -52,6 +54,35 @@ RSpec.describe Api::V1::TransactionsController, type: :controller do
 
       expect(response).to have_http_status :success
       expect(json_response['result']).to eq transaction1.result
+    end
+  end
+
+  describe 'GET #find_all' do
+    it 'returns all transactions by invoice id' do
+      get :find_all, invoice_id: transaction1.invoice_id
+
+      expect(response).to have_http_status :success
+      expect(json_response.class).to eq Array
+      expect(json_response.count).to eq 2
+      expect(json_response.first['invoice_id']).to eq transaction1.invoice_id
+    end
+
+    it 'returns all transactions by credit card number' do
+      get :find_all, credit_card_number: transaction1.credit_card_number
+
+      expect(response).to have_http_status :success
+      expect(json_response.class).to eq Array
+      expect(json_response.count).to eq 2
+      expect(json_response.first['credit_card_number']).to eq transaction1.credit_card_number
+    end
+
+    it 'returns all transactions by result' do
+      get :find_all, result: transaction1.result
+
+      expect(response).to have_http_status :success
+      expect(json_response.class).to eq Array
+      expect(json_response.count).to eq 2
+      expect(json_response.first['result']).to eq transaction1.result
     end
   end
 end
