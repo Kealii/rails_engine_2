@@ -2,6 +2,13 @@ class Merchant < ActiveRecord::Base
   has_many :invoices
   has_many :items
 
+  def favorite_customer
+    successful_invoices = invoices.successful.group_by(&:customer_id)
+    sorted_invoices     = successful_invoices.sort_by { |_, v| v.count }.reverse.flatten
+    top_customer        = sorted_invoices.first
+    Customer.find(top_customer)
+  end
+
   def revenue(params)
     if params[:date]
       revenue_by_date(params[:date])

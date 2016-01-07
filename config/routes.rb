@@ -56,6 +56,7 @@ Rails.application.routes.draw do
           get :most_revenue
           get :most_items
           get :revenue, controller: :total_merchant_revenue, action: :index
+          get :favorite_customer, controller: :merchants_favorite_customer, action: :index
         end
       end
 

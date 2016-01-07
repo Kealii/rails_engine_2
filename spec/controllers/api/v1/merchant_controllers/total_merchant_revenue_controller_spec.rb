@@ -8,8 +8,8 @@ RSpec.describe Api::V1::TotalMerchantRevenueController, type: :controller do
                                         name: 'Different Merchant') }
 
   def revenue_setup
-    item         = FactoryGirl.create(:item, merchant: merchant1)
-    invoice      = FactoryGirl.create(:invoice, merchant: merchant1)
+    item    = FactoryGirl.create(:item, merchant: merchant1)
+    invoice = FactoryGirl.create(:invoice, merchant: merchant1)
     FactoryGirl.create(:invoice_item, item: item, quantity: 4, unit_price: 2, invoice: invoice)
     FactoryGirl.create(:transaction, result: 'success', invoice: invoice)
 
