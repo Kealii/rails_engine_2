@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Customer, type: :model do
-
   let!(:customer)  { create(:customer) }
   let!(:merchant1) { create(:merchant) }
   let!(:merchant2) { create(:merchant) }

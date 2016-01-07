@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Item, type: :model do
-
   describe '#convert_unit_price' do
     it 'divides the unit price by 100 before saving' do
       unit_price = 100
@@ -41,5 +40,4 @@ RSpec.describe Item, type: :model do
       expect(best_day).to be_kind_of Hash
     end
   end
-
 end

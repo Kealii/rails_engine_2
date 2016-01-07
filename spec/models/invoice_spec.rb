@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Invoice, type: :model do
-
   let!(:invoice1)     { create(:invoice) }
   let!(:invoice2)     { create(:invoice) }
   let!(:transaction1) { create(:transaction,

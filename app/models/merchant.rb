@@ -15,14 +15,14 @@ class Merchant < ActiveRecord::Base
 
   def revenue(date = nil)
     if date
-      revenue_by_date(date)
+      { revenue: successful_invoices.where({created_at: date}).sum("quantity * unit_price") }
     else
-      { revenue: invoices.successful.joins(:invoice_items).sum("quantity * unit_price") }
+      { revenue: successful_invoices.sum("quantity * unit_price") }
     end
   end
 
-  def revenue_by_date(date)
-    { revenue: invoices.successful.joins(:invoice_items).where({created_at: date}).sum("quantity * unit_price") }
+  def successful_invoices
+    invoices.successful.joins(:invoice_items)
   end
 
   def self.total_revenue_by_date(date)
@@ -30,17 +30,17 @@ class Merchant < ActiveRecord::Base
   end
 
   def self.revenue_ranking(quantity)
-    top_merchants = Merchant.all.map do |merchant|
-      [merchant, merchant.invoices.successful.joins(:invoice_items).sum("quantity * unit_price")]
-    end
-    top_merchants.sort_by { |merchant| merchant.last }.reverse.map(&:first).first(quantity.to_i)
+    ranking(quantity, "quantity * unit_price")
   end
 
   def self.item_ranking(quantity)
+    ranking(quantity, "quantity")
+  end
+
+  def self.ranking(quantity, rank_by)
     top_merchants = Merchant.all.map do |merchant|
-      [merchant, merchant.invoices.successful.joins(:invoice_items).sum("quantity")]
+      [merchant, merchant.successful_invoices.sum(rank_by)]
     end
     top_merchants.sort_by(&:last).reverse.map(&:first).first(quantity.to_i)
   end
-
 end
