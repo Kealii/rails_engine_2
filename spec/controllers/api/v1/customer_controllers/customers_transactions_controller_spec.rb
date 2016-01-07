@@ -4,11 +4,11 @@ RSpec.describe Api::V1::CustomersTransactionsController, type: :controller do
 
   describe '#index' do
     it 'returns the transactions of the customer' do
-      customer     = FactoryGirl.create(:customer)
-      invoice      = FactoryGirl.create(:invoice, customer: customer)
-      transaction  = FactoryGirl.create(:transaction, invoice: invoice)
-      FactoryGirl.create(:transaction, invoice: invoice)
-      FactoryGirl.create(:transaction)
+      customer     = create(:customer)
+      invoice      = create(:invoice, customer: customer)
+      transaction  = create(:transaction, invoice: invoice)
+      create(:transaction, invoice: invoice)
+      create(:transaction)
       get :index, customer_id: customer.id
 
       expect(json_response.count).to eq 2

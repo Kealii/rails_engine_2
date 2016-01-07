@@ -2,10 +2,10 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::TransactionsController, type: :controller do
 
-  let!(:transaction1) { FactoryGirl.create(:transaction) }
-  let!(:transaction2) { FactoryGirl.create(:transaction,
+  let!(:transaction1) { create(:transaction) }
+  let!(:transaction2) { create(:transaction,
                                            invoice: transaction1.invoice) }
-  let!(:transaction3) { FactoryGirl.create(:transaction,
+  let!(:transaction3) { create(:transaction,
                                            credit_card_number: '1234',
                                            result: 'pending') }
 

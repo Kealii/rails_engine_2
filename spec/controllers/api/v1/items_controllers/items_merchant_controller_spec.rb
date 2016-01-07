@@ -4,9 +4,9 @@ RSpec.describe Api::V1::ItemsMerchantController, type: :controller do
 
   describe '#index' do
     it 'returns the merchant of the item' do
-      FactoryGirl.create(:merchant)
-      merchant = FactoryGirl.create(:merchant)
-      item     = FactoryGirl.create(:item, merchant: merchant)
+      create(:merchant)
+      merchant = create(:merchant)
+      item     = create(:item, merchant: merchant)
       get :index, item_id: item.id
 
       expect(json_response.class).to eq Hash

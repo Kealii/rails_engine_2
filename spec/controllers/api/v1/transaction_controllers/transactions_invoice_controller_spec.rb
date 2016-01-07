@@ -4,8 +4,8 @@ RSpec.describe Api::V1::TransactionsInvoiceController, type: :controller do
 
   describe '#index' do
     it 'returns the invoice of the transaction' do
-      invoice     = FactoryGirl.create(:invoice)
-      transaction = FactoryGirl.create(:transaction, invoice: invoice)
+      invoice     = create(:invoice)
+      transaction = create(:transaction, invoice: invoice)
       get :index, transaction_id: transaction.id
 
       expect(json_response.class).to eq Hash

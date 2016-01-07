@@ -2,19 +2,19 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::MerchantsFavoriteCustomerController, type: :controller do
 
-  let!(:merchant1) { FactoryGirl.create(:merchant) }
-  let!(:customer1) { FactoryGirl.create(:customer) }
+  let!(:merchant1) { create(:merchant) }
+  let!(:customer1) { create(:customer) }
 
   def customer_setup
-    item    = FactoryGirl.create(:item, merchant: merchant1)
-    invoice = FactoryGirl.create(:invoice, merchant: merchant1, customer: customer1)
-    FactoryGirl.create(:invoice_item, item: item, quantity: 4, unit_price: 2, invoice: invoice)
-    FactoryGirl.create(:transaction, result: 'success', invoice: invoice)
+    item    = create(:item, merchant: merchant1)
+    invoice = create(:invoice, merchant: merchant1, customer: customer1)
+    create(:invoice_item, item: item, quantity: 4, unit_price: 2, invoice: invoice)
+    create(:transaction, result: 'success', invoice: invoice)
 
-    customer2 = FactoryGirl.create(:customer)
-    invoice = FactoryGirl.create(:invoice, merchant: merchant1, customer: customer2)
-    FactoryGirl.create(:invoice_item, item: item, quantity: 4, unit_price: 2, invoice: invoice)
-    FactoryGirl.create(:transaction, result: 'expired', invoice: invoice)
+    customer2 = create(:customer)
+    invoice = create(:invoice, merchant: merchant1, customer: customer2)
+    create(:invoice_item, item: item, quantity: 4, unit_price: 2, invoice: invoice)
+    create(:transaction, result: 'expired', invoice: invoice)
   end
 
   describe '#index' do

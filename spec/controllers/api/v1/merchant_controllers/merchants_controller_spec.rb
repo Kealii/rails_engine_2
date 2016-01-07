@@ -2,35 +2,35 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::MerchantsController, type: :controller do
 
-  let!(:merchant1) { FactoryGirl.create(:merchant) }
-  let!(:merchant2) { FactoryGirl.create(:merchant) }
-  let!(:merchant3) { FactoryGirl.create(:merchant,
+  let!(:merchant1) { create(:merchant) }
+  let!(:merchant2) { create(:merchant) }
+  let!(:merchant3) { create(:merchant,
                                         name: 'Different Merchant') }
 
   def revenue_setup
-    item         = FactoryGirl.create(:item, merchant: merchant1)
-    invoice      = FactoryGirl.create(:invoice, merchant: merchant1)
-    FactoryGirl.create(:invoice_item, item: item, quantity: 4, unit_price: 2, invoice: invoice)
-    FactoryGirl.create(:transaction, result: 'success', invoice: invoice)
+    item         = create(:item, merchant: merchant1)
+    invoice      = create(:invoice, merchant: merchant1)
+    create(:invoice_item, item: item, quantity: 4, unit_price: 2, invoice: invoice)
+    create(:transaction, result: 'success', invoice: invoice)
 
-    invoice = FactoryGirl.create(:invoice, merchant: merchant1)
-    FactoryGirl.create(:invoice_item, item: item, quantity: 3, unit_price: 2, invoice: invoice)
-    FactoryGirl.create(:transaction, result: 'expired', invoice: invoice)
+    invoice = create(:invoice, merchant: merchant1)
+    create(:invoice_item, item: item, quantity: 3, unit_price: 2, invoice: invoice)
+    create(:transaction, result: 'expired', invoice: invoice)
 
-    invoice = FactoryGirl.create(:invoice, merchant: merchant2)
-    FactoryGirl.create(:invoice_item, item: item, quantity: 3, unit_price: 2, invoice: invoice)
-    FactoryGirl.create(:transaction, result: 'success', invoice: invoice)
+    invoice = create(:invoice, merchant: merchant2)
+    create(:invoice_item, item: item, quantity: 3, unit_price: 2, invoice: invoice)
+    create(:transaction, result: 'success', invoice: invoice)
   end
 
   def items_sold_setup
-    item1 = FactoryGirl.create(:item, merchant: merchant1)
-    item2 = FactoryGirl.create(:item, merchant: merchant2)
-    invoice1 = FactoryGirl.create(:invoice, merchant: merchant1)
-    invoice2 = FactoryGirl.create(:invoice, merchant: merchant2)
-    FactoryGirl.create(:invoice_item, item: item1, quantity: 4, unit_price: 2, invoice: invoice1)
-    FactoryGirl.create(:invoice_item, item: item2, quantity: 3, unit_price: 2, invoice: invoice2)
-    FactoryGirl.create(:transaction, result: 'success', invoice: invoice1)
-    FactoryGirl.create(:transaction, result: 'success', invoice: invoice2)
+    item1 = create(:item, merchant: merchant1)
+    item2 = create(:item, merchant: merchant2)
+    invoice1 = create(:invoice, merchant: merchant1)
+    invoice2 = create(:invoice, merchant: merchant2)
+    create(:invoice_item, item: item1, quantity: 4, unit_price: 2, invoice: invoice1)
+    create(:invoice_item, item: item2, quantity: 3, unit_price: 2, invoice: invoice2)
+    create(:transaction, result: 'success', invoice: invoice1)
+    create(:transaction, result: 'success', invoice: invoice2)
   end
 
   describe 'GET #index' do

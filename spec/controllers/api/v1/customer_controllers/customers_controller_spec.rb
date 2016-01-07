@@ -2,15 +2,15 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::CustomersController, type: :controller do
 
-  let!(:customer1) { FactoryGirl.create(:customer) }
-  let!(:customer2) { FactoryGirl.create(:customer) }
-  let!(:customer3) { FactoryGirl.create(:customer,
-                                        first_name: 'Different',
-                                        last_name: 'Customer') }
+  let!(:customer1) { create(:customer) }
+  let!(:customer2) { create(:customer) }
+  let!(:customer3) { create(:customer,
+                            first_name: 'Different',
+                            last_name: 'Customer') }
 
   describe 'GET #index' do
     it 'returns the correct number of customers' do
-      number_of_customers =  Customer.count
+      number_of_customers = Customer.count
       get :index
 
       expect(response).to have_http_status :success

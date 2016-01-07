@@ -2,10 +2,10 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::ItemsController, type: :controller do
 
-  let!(:merchant) { FactoryGirl.create(:merchant) }
-  let!(:item1)    { FactoryGirl.create(:item, merchant: merchant) }
-  let!(:item2)    { FactoryGirl.create(:item, merchant: merchant) }
-  let!(:item3)    { FactoryGirl.create(:item,
+  let!(:merchant) { create(:merchant) }
+  let!(:item1)    { create(:item, merchant: merchant) }
+  let!(:item2)    { create(:item, merchant: merchant) }
+  let!(:item3)    { create(:item,
                                        name: 'Different',
                                        description: 'Item',
                                        unit_price: 54321) }
@@ -18,9 +18,9 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
   end
 
   def create_item(item, result)
-    invoice = FactoryGirl.create(:invoice, merchant: merchant)
-    FactoryGirl.create(:invoice_item, item: item, quantity: 4, unit_price: 2, invoice: invoice)
-    FactoryGirl.create(:transaction, result: result, invoice: invoice)
+    invoice = create(:invoice, merchant: merchant)
+    create(:invoice_item, item: item, quantity: 4, unit_price: 2, invoice: invoice)
+    create(:transaction, result: result, invoice: invoice)
   end
 
   describe 'GET #index' do

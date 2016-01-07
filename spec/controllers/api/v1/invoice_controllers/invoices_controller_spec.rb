@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::InvoicesController, type: :controller do
 
-  let!(:invoice1) { FactoryGirl.create(:invoice) }
-  let!(:invoice2) { FactoryGirl.create(:invoice,
+  let!(:invoice1) { create(:invoice) }
+  let!(:invoice2) { create(:invoice,
                                        customer: invoice1.customer,
                                        merchant: invoice1.merchant) }
-  let!(:invoice3) { FactoryGirl.create(:invoice, status: 'Different') }
+  let!(:invoice3) { create(:invoice, status: 'Different') }
 
   describe 'GET #index' do
     it 'returns the correct number of invoices' do
