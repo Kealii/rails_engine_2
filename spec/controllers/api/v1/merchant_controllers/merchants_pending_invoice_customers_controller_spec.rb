@@ -8,18 +8,16 @@ RSpec.describe Api::V1::MerchantsPendingInvoiceCustomersController, type: :contr
   let!(:customer3) { create(:customer) }
 
   def customer_setup
+    create_transactions(customer1, 'success')
+    create_transactions(customer2, 'failed')
+    create_transactions(customer3, 'failed')
+  end
+
+  def create_transactions(customer, result)
     item    = create(:item, merchant: merchant)
-    invoice = create(:invoice, merchant: merchant, customer: customer1)
-    create(:invoice_item, item: item, quantity: 4, unit_price: 2, invoice: invoice)
-    create(:transaction, result: 'success', invoice: invoice)
-
-    invoice = create(:invoice, merchant: merchant, customer: customer2)
-    create(:invoice_item, item: item, quantity: 4, unit_price: 2, invoice: invoice)
-    create(:transaction, result: 'failed', invoice: invoice)
-
-    invoice = create(:invoice, merchant: merchant, customer: customer3)
-    create(:invoice_item, item: item, quantity: 4, unit_price: 2, invoice: invoice)
-    create(:transaction, result: 'failed', invoice: invoice)
+    invoice = create(:invoice, merchant: merchant, customer: customer)
+    create(:invoice_item, item: item, invoice: invoice)
+    create(:transaction, result: result, invoice: invoice)
   end
 
   describe '#index' do

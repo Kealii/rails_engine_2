@@ -4,22 +4,19 @@ RSpec.describe Api::V1::TotalMerchantRevenueController, type: :controller do
 
   let!(:merchant1) { create(:merchant) }
   let!(:merchant2) { create(:merchant) }
-  let!(:merchant3) { create(:merchant,
-                                        name: 'Different Merchant') }
+  let!(:merchant3) { create(:merchant, name: 'Different Merchant') }
 
   def revenue_setup
-    item    = create(:item, merchant: merchant1)
-    invoice = create(:invoice, merchant: merchant1)
-    create(:invoice_item, item: item, quantity: 4, unit_price: 2, invoice: invoice)
-    create(:transaction, result: 'success', invoice: invoice)
+    create_items(merchant1, 'success', 4)
+    create_items(merchant1, 'failed',  4)
+    create_items(merchant2, 'success', 3)
+  end
 
-    invoice = create(:invoice, merchant: merchant1)
-    create(:invoice_item, item: item, quantity: 3, unit_price: 2, invoice: invoice)
-    create(:transaction, result: 'expired', invoice: invoice)
-
-    invoice = create(:invoice, merchant: merchant2)
-    create(:invoice_item, item: item, quantity: 3, unit_price: 2, invoice: invoice)
-    create(:transaction, result: 'success', invoice: invoice)
+  def create_items(merchant, result, quantity)
+    item    = create(:item, merchant: merchant)
+    invoice = create(:invoice, merchant: merchant)
+    create(:invoice_item, item: item, quantity: quantity, invoice: invoice)
+    create(:transaction, result: result, invoice: invoice )
   end
 
   describe '#index' do
