@@ -7,14 +7,15 @@ RSpec.describe Api::V1::CustomersFavoriteMerchantController, type: :controller d
   let!(:merchant2) { create(:merchant) }
 
   def merchant_setup
-    item    = create(:item, merchant: merchant1)
-    invoice = create(:invoice, merchant: merchant1, customer: customer)
-    create(:invoice_item, item: item, quantity: 4, unit_price: 2, invoice: invoice)
-    create(:transaction, result: 'success', invoice: invoice)
+    create_transactions(merchant1, 'success')
+    create_transactions(merchant2, 'failed')
+  end
 
-    invoice = create(:invoice, merchant: merchant2, customer: customer)
-    create(:invoice_item, item: item, quantity: 4, unit_price: 2, invoice: invoice)
-    create(:transaction, result: 'expired', invoice: invoice)
+  def create_transactions(merchant, result)
+    item    = create(:item, merchant: merchant)
+    invoice = create(:invoice, merchant: merchant, customer: customer)
+    create(:invoice_item, item: item, invoice: invoice)
+    create(:transaction, result: result, invoice: invoice)
   end
 
   describe '#index' do
