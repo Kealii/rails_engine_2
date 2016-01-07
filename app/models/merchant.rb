@@ -23,4 +23,11 @@ class Merchant < ActiveRecord::Base
     top_merchants.sort_by { |merchant| merchant.last }.reverse.map(&:first).first(quantity.to_i)
   end
 
+  def self.item_ranking(quantity)
+    top_merchants = Merchant.all.map do |merchant|
+      [merchant, merchant.invoices.successful.joins(:invoice_items).sum("quantity")]
+    end
+    top_merchants.sort_by { |merchant| merchant.last }.reverse.map(&:first).first(quantity.to_i)
+  end
+
 end

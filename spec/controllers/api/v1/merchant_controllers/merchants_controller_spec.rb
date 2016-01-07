@@ -22,6 +22,17 @@ RSpec.describe Api::V1::MerchantsController, type: :controller do
     FactoryGirl.create(:transaction, result: 'success', invoice: invoice)
   end
 
+  def items_sold_setup
+    item1 = FactoryGirl.create(:item, merchant: merchant1)
+    item2 = FactoryGirl.create(:item, merchant: merchant2)
+    invoice1 = FactoryGirl.create(:invoice, merchant: merchant1)
+    invoice2 = FactoryGirl.create(:invoice, merchant: merchant2)
+    FactoryGirl.create(:invoice_item, item: item1, quantity: 4, unit_price: 2, invoice: invoice1)
+    FactoryGirl.create(:invoice_item, item: item2, quantity: 3, unit_price: 2, invoice: invoice2)
+    FactoryGirl.create(:transaction, result: 'success', invoice: invoice1)
+    FactoryGirl.create(:transaction, result: 'success', invoice: invoice2)
+  end
+
   describe 'GET #index' do
     it 'returns the correct number of merchants' do
       number_of_merchants = Merchant.count
@@ -102,6 +113,16 @@ RSpec.describe Api::V1::MerchantsController, type: :controller do
       revenue_setup
 
       get :most_revenue, quantity: 2
+      expect(json_response.count).to eq 2
+      expect(json_response.first['id']).to eq merchant1.id
+    end
+  end
+
+  describe 'GET #most_items' do
+    it 'returns the top merchants ranked by total items sold' do
+      items_sold_setup
+
+      get :most_items, quantity: 2
       expect(json_response.count).to eq 2
       expect(json_response.first['id']).to eq merchant1.id
     end
