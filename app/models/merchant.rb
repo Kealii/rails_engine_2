@@ -9,6 +9,10 @@ class Merchant < ActiveRecord::Base
     Customer.find(top_customer)
   end
 
+  def pending_customers
+    invoices.pending.joins(:customer).uniq
+  end
+
   def revenue(params)
     if params[:date]
       revenue_by_date(params[:date])

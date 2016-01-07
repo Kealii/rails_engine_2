@@ -50,6 +50,10 @@ Rails.application.routes.draw do
         resources :invoices, only: [:index], controller: :merchant_invoices
         get :revenue
         get :favorite_customer, controller: :merchants_favorite_customer, action: :index
+        get :customers_with_pending_invoices,
+            controller: :merchants_pending_invoice_customers,
+            action: :index
+
         collection do
           get :find
           get :find_all
