@@ -23,9 +23,13 @@ class Api::V1::MerchantsController < ApplicationController
     respond_with Merchant.find(params[:merchant_id]).revenue(merchant_params)
   end
 
+  def most_revenue
+    respond_with Merchant.revenue_ranking(merchant_params[:quantity])
+  end
+
   private
 
   def merchant_params
-    params.permit(:id, :name, :created_at, :updated_at, :date)
+    params.permit(:id, :name, :created_at, :updated_at, :date, :quantity)
   end
 end

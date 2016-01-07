@@ -10,7 +10,7 @@ RSpec.describe Api::V1::MerchantsController, type: :controller do
   def revenue_setup
     item         = FactoryGirl.create(:item, merchant: merchant1)
     invoice      = FactoryGirl.create(:invoice, merchant: merchant1)
-    FactoryGirl.create(:invoice_item, item: item, quantity: 3, unit_price: 2, invoice: invoice)
+    FactoryGirl.create(:invoice_item, item: item, quantity: 4, unit_price: 2, invoice: invoice)
     FactoryGirl.create(:transaction, result: 'success', invoice: invoice)
 
     invoice = FactoryGirl.create(:invoice, merchant: merchant1)
@@ -83,7 +83,7 @@ RSpec.describe Api::V1::MerchantsController, type: :controller do
       revenue_setup
       get :revenue, merchant_id: merchant1.id
 
-      expect(json_response['revenue']).to eq '0.06'
+      expect(json_response['revenue']).to eq '0.08'
     end
   end
 
@@ -95,4 +95,16 @@ RSpec.describe Api::V1::MerchantsController, type: :controller do
       expect(json_response['revenue']).to eq '0.0'
     end
   end
+
+
+  describe 'GET #most_revenue' do
+    it 'returns the top merchants ranked by total revenue' do
+      revenue_setup
+
+      get :most_revenue, quantity: 2
+      expect(json_response.count).to eq 2
+      expect(json_response.first['id']).to eq merchant1.id
+    end
+  end
+
 end
