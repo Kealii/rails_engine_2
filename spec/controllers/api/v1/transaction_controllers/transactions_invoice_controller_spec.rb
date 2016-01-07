@@ -8,7 +8,6 @@ RSpec.describe Api::V1::TransactionsInvoiceController, type: :controller do
       transaction = FactoryGirl.create(:transaction, invoice: invoice)
       get :index, transaction_id: transaction.id
 
-      puts json_response
       expect(json_response.class).to eq Hash
       expect(json_response['id']).to eq invoice.id
     end
