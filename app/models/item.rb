@@ -15,4 +15,11 @@ class Item < ActiveRecord::Base
     top_items.sort_by(&:last).reverse.map(&:first).first(quantity.to_i)
   end
 
+  def self.item_ranking(quantity)
+    top_items = Item.all.map do |item|
+      [item, item.invoices.successful.sum("quantity")]
+    end
+    top_items.sort_by(&:last).reverse.map(&:first).first(quantity.to_i)
+  end
+
 end

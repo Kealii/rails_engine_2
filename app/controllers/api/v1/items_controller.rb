@@ -23,6 +23,10 @@ class Api::V1::ItemsController < ApplicationController
     respond_with Item.revenue_ranking(item_params[:quantity])
   end
 
+  def most_items
+    respond_with Item.item_ranking(item_params[:quantity])
+  end
+
   private
 
   def item_params

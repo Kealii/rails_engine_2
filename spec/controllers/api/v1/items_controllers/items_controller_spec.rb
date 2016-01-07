@@ -138,4 +138,15 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
     end
   end
 
+  describe 'GET #most_items' do
+    it 'returns the top items ranked by number sold' do
+      revenue_setup
+
+      get :most_items, quantity: 2
+      expect(json_response.count).to eq 2
+      expect(json_response.first['id']).to eq item1.id
+      expect(json_response.last['id']).to  eq item3.id
+    end
+  end
+
 end
