@@ -18,6 +18,7 @@ class Api::V1::TransactionsController < ApplicationController
   def random
     respond_with Transaction.limit(1).order('RANDOM()')
   end
+
   private
 
   def transaction_params
