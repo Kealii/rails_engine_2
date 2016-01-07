@@ -13,9 +13,9 @@ class Merchant < ActiveRecord::Base
     invoices.pending.joins(:customer).uniq
   end
 
-  def revenue(params)
-    if params[:date]
-      revenue_by_date(params[:date])
+  def revenue(date = nil)
+    if date
+      revenue_by_date(date)
     else
       { revenue: invoices.successful.joins(:invoice_items).sum("quantity * unit_price") }
     end

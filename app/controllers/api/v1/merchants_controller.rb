@@ -20,7 +20,7 @@ class Api::V1::MerchantsController < ApplicationController
   end
 
   def revenue
-    respond_with Merchant.find(params[:merchant_id]).revenue(merchant_params)
+    respond_with Merchant.find(params[:merchant_id]).revenue(merchant_params[:date])
   end
 
   def most_revenue
