@@ -19,6 +19,10 @@ class Api::V1::ItemsController < ApplicationController
     respond_with Item.limit(1).order('RANDOM()')
   end
 
+  def most_revenue
+    respond_with Item.revenue_ranking(item_params[:quantity])
+  end
+
   private
 
   def item_params
@@ -27,6 +31,7 @@ class Api::V1::ItemsController < ApplicationController
                   :description,
                   :unit_price,
                   :merchant_id,
+                  :quantity,
                   :created_at,
                   :updated_at)
   end

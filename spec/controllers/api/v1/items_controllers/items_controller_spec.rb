@@ -2,12 +2,26 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::ItemsController, type: :controller do
 
-  let!(:item1) { FactoryGirl.create(:item) }
-  let!(:item2) { FactoryGirl.create(:item, merchant: item1.merchant) }
-  let!(:item3) { FactoryGirl.create(:item,
-                                    name: 'Different',
-                                    description: 'Item',
-                                    unit_price: 54321) }
+  let!(:merchant) { FactoryGirl.create(:merchant) }
+  let!(:item1)    { FactoryGirl.create(:item, merchant: merchant) }
+  let!(:item2)    { FactoryGirl.create(:item, merchant: merchant) }
+  let!(:item3)    { FactoryGirl.create(:item,
+                                       name: 'Different',
+                                       description: 'Item',
+                                       unit_price: 54321) }
+
+  def revenue_setup
+    create_item(item1, 'success')
+    create_item(item2, 'failed')
+    create_item(item1, 'success')
+    create_item(item3, 'success')
+  end
+
+  def create_item(item, result)
+    invoice = FactoryGirl.create(:invoice, merchant: merchant)
+    FactoryGirl.create(:invoice_item, item: item, quantity: 4, unit_price: 2, invoice: invoice)
+    FactoryGirl.create(:transaction, result: result, invoice: invoice)
+  end
 
   describe 'GET #index' do
     it 'returns the correct number of items' do
@@ -111,6 +125,16 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
 
       expect(response).to have_http_status :success
       expect(json_response.first['id']).to_not eq nil
+    end
+  end
+
+  describe 'GET #most_revenue' do
+    it 'returns the top items ranked by total revenue' do
+      revenue_setup
+
+      get :most_revenue, quantity: 2
+      expect(json_response.count).to eq 2
+      expect(json_response.first['id']).to eq item1.id
     end
   end
 

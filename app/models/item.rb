@@ -7,4 +7,12 @@ class Item < ActiveRecord::Base
   def convert_unit_price
     self.unit_price = self.unit_price / 100
   end
+
+  def self.revenue_ranking(quantity)
+    top_items = Item.all.map do |item|
+      [item, item.invoices.successful.sum("quantity * unit_price")]
+    end
+    top_items.sort_by(&:last).reverse.map(&:first).first(quantity.to_i)
+  end
+
 end
