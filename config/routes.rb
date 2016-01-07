@@ -49,14 +49,14 @@ Rails.application.routes.draw do
         resources :items,    only: [:index], controller: :merchant_items
         resources :invoices, only: [:index], controller: :merchant_invoices
         get :revenue
+        get :favorite_customer, controller: :merchants_favorite_customer, action: :index
         collection do
           get :find
           get :find_all
           get :random
           get :most_revenue
           get :most_items
-          get :revenue, controller: :total_merchant_revenue, action: :index
-          get :favorite_customer, controller: :merchants_favorite_customer, action: :index
+          get :revenue,           controller: :total_merchant_revenue,      action: :index
         end
       end
 
