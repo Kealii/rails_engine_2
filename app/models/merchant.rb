@@ -3,17 +3,19 @@ class Merchant < ActiveRecord::Base
   has_many :items
 
   def revenue(params)
-    #TODO unit test me prease :)
-      if params[:date]
-        revenue_by_date(params[:date])
-      else
-        { revenue: invoices.successful.joins(:invoice_items).sum("quantity * unit_price") }
-      end
+    if params[:date]
+      revenue_by_date(params[:date])
+    else
+      { revenue: invoices.successful.joins(:invoice_items).sum("quantity * unit_price") }
+    end
   end
 
   def revenue_by_date(date)
-    #TODO unit test me toooo
     { revenue: invoices.successful.joins(:invoice_items).where({created_at: date}).sum("quantity * unit_price") }
+  end
+
+  def self.total_revenue_by_date(date)
+    { total_revenue: Invoice.successful.joins(:invoice_items).where({created_at: date}).sum("quantity * unit_price") }
   end
 
   def self.revenue_ranking(quantity)

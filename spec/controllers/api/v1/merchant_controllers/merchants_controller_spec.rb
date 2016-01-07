@@ -107,7 +107,6 @@ RSpec.describe Api::V1::MerchantsController, type: :controller do
     end
   end
 
-
   describe 'GET #most_revenue' do
     it 'returns the top merchants ranked by total revenue' do
       revenue_setup
