@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1, defaults: { format: :json } do
 
-      resources :customers,      only: [:index, :show] do
+      resources :customers, only: [:index, :show] do
         resources :invoices,     only: [:index], controller: :customers_invoices
         resources :transactions, only: [:index], controller: :customers_transactions
         get :favorite_merchant, controller: :customers_favorite_merchant, action: :index
@@ -23,7 +23,7 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :invoices,        only: [:index, :show] do
+      resources :invoices, only: [:index, :show] do
         resources :transactions,  only: [:index], controller: :invoice_transactions
         resources :invoice_items, only: [:index], controller: :invoice_invoice_items
         resources :items,         only: [:index], controller: :invoices_items
@@ -36,7 +36,7 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :items,           only: [:index, :show] do
+      resources :items, only: [:index, :show] do
         resources :invoice_items, only: [:index], controller: :items_invoice_items
         resources :merchant,      only: [:index], controller: :items_merchant
         get :best_day, controller: :best_day, action: :index
@@ -49,7 +49,7 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :merchants,  only: [:index, :show] do
+      resources :merchants, only: [:index, :show] do
         resources :items,    only: [:index], controller: :merchant_items
         resources :invoices, only: [:index], controller: :merchant_invoices
         get :revenue
@@ -64,18 +64,19 @@ Rails.application.routes.draw do
           get :random
           get :most_revenue
           get :most_items
-          get :revenue, controller: :total_merchant_revenue,      action: :index
+          get :revenue, controller: :total_merchant_revenue, action: :index
         end
       end
 
       resources :transactions, only: [:index, :show] do
-        resources :invoice,    only: [:index], controller: :transactions_invoice
+        resources :invoice, only: [:index], controller: :transactions_invoice
         collection do
           get :find
           get :find_all
           get :random
         end
       end
+
     end
   end
 end
