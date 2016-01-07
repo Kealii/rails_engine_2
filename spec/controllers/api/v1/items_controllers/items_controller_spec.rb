@@ -6,9 +6,9 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
   let!(:item1)    { create(:item, merchant: merchant) }
   let!(:item2)    { create(:item, merchant: merchant) }
   let!(:item3)    { create(:item,
-                                       name: 'Different',
-                                       description: 'Item',
-                                       unit_price: 54321) }
+                           name: 'Different',
+                           description: 'Item',
+                           unit_price: 54321) }
 
   def revenue_setup
     create_item(item1, 'success')
@@ -19,8 +19,8 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
 
   def create_item(item, result)
     invoice = create(:invoice, merchant: merchant)
-    create(:invoice_item, item: item, quantity: 4, unit_price: 2, invoice: invoice)
-    create(:transaction, result: result, invoice: invoice)
+    create(:invoice_item, item: item,     quantity: 4, unit_price: 2, invoice: invoice)
+    create(:transaction,  result: result, invoice: invoice)
   end
 
   describe 'GET #index' do
@@ -38,8 +38,8 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
       get :show, id: item1.id
 
       expect(response).to have_http_status :success
-      expect(json_response['id']).to eq item1.id
-      expect(json_response['name']).to eq item1.name
+      expect(json_response['id']).to          eq item1.id
+      expect(json_response['name']).to        eq item1.name
       expect(json_response['description']).to eq item1.description
     end
   end
@@ -131,8 +131,9 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
   describe 'GET #most_revenue' do
     it 'returns the top items ranked by total revenue' do
       revenue_setup
-
       get :most_revenue, quantity: 2
+
+      expect(response).to have_http_status :success
       expect(json_response.count).to eq 2
       expect(json_response.first['id']).to eq item1.id
     end
@@ -141,8 +142,9 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
   describe 'GET #most_items' do
     it 'returns the top items ranked by number sold' do
       revenue_setup
-
       get :most_items, quantity: 2
+
+      expect(response).to have_http_status :success
       expect(json_response.count).to eq 2
       expect(json_response.first['id']).to eq item1.id
       expect(json_response.last['id']).to  eq item3.id

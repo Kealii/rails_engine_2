@@ -2,13 +2,17 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::InvoiceItemsController, type: :controller do
 
-  let!(:invoice_item1) { create(:invoice_item) }
+  let!(:item)          { create(:item) }
+  let!(:invoice)       { create(:invoice) }
+  let!(:invoice_item1) { create(:invoice_item,
+                                item: item,
+                                invoice: invoice) }
   let!(:invoice_item2) { create(:invoice_item,
-                                            item:    invoice_item1.item,
-                                            invoice: invoice_item1.invoice) }
+                                item: item,
+                                invoice: invoice) }
   let!(:invoice_item3) { create(:invoice_item,
-                                            quantity:   1,
-                                            unit_price: 54321) }
+                                quantity: 1,
+                                unit_price: 54321) }
 
   describe 'GET #index' do
     it 'returns the correct number of invoice items' do

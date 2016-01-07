@@ -2,10 +2,10 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::InvoicesController, type: :controller do
 
-  let!(:invoice1) { create(:invoice) }
-  let!(:invoice2) { create(:invoice,
-                                       customer: invoice1.customer,
-                                       merchant: invoice1.merchant) }
+  let!(:merchant) { create(:merchant) }
+  let!(:customer) { create(:customer) }
+  let!(:invoice1) { create(:invoice, customer: customer, merchant: merchant) }
+  let!(:invoice2) { create(:invoice, customer: customer, merchant: merchant) }
   let!(:invoice3) { create(:invoice, status: 'Different') }
 
   describe 'GET #index' do

@@ -4,33 +4,24 @@ RSpec.describe Api::V1::MerchantsController, type: :controller do
 
   let!(:merchant1) { create(:merchant) }
   let!(:merchant2) { create(:merchant) }
-  let!(:merchant3) { create(:merchant,
-                                        name: 'Different Merchant') }
+  let!(:merchant3) { create(:merchant, name: 'Different Merchant') }
 
   def revenue_setup
-    item         = create(:item, merchant: merchant1)
-    invoice      = create(:invoice, merchant: merchant1)
-    create(:invoice_item, item: item, quantity: 4, unit_price: 2, invoice: invoice)
-    create(:transaction, result: 'success', invoice: invoice)
-
-    invoice = create(:invoice, merchant: merchant1)
-    create(:invoice_item, item: item, quantity: 3, unit_price: 2, invoice: invoice)
-    create(:transaction, result: 'expired', invoice: invoice)
-
-    invoice = create(:invoice, merchant: merchant2)
-    create(:invoice_item, item: item, quantity: 3, unit_price: 2, invoice: invoice)
-    create(:transaction, result: 'success', invoice: invoice)
+    create_items(merchant1, 'success', 4)
+    create_items(merchant1, 'expired', 4)
+    create_items(merchant2, 'success', 4)
   end
 
   def items_sold_setup
-    item1 = create(:item, merchant: merchant1)
-    item2 = create(:item, merchant: merchant2)
-    invoice1 = create(:invoice, merchant: merchant1)
-    invoice2 = create(:invoice, merchant: merchant2)
-    create(:invoice_item, item: item1, quantity: 4, unit_price: 2, invoice: invoice1)
-    create(:invoice_item, item: item2, quantity: 3, unit_price: 2, invoice: invoice2)
-    create(:transaction, result: 'success', invoice: invoice1)
-    create(:transaction, result: 'success', invoice: invoice2)
+    create_items(merchant1, 'success', 4)
+    create_items(merchant2, 'success', 3)
+  end
+
+  def create_items(merchant, result, quantity)
+    item    = create(:item, merchant: merchant)
+    invoice = create(:invoice, merchant: merchant)
+    create(:invoice_item, item: item, quantity: quantity, invoice: invoice)
+    create(:transaction, result: result, invoice: invoice )
   end
 
   describe 'GET #index' do
@@ -94,7 +85,7 @@ RSpec.describe Api::V1::MerchantsController, type: :controller do
       revenue_setup
       get :revenue, merchant_id: merchant1.id
 
-      expect(json_response['revenue']).to eq '0.08'
+      expect(json_response['revenue']).to eq '493.8'
     end
   end
 

@@ -5,9 +5,9 @@ RSpec.describe Api::V1::ItemsInvoiceItemsController, type: :controller do
   describe '#index' do
     it 'returns the invoice items of the item' do
       item = create(:item)
-      create(:invoice_item, item: item)
-      create(:invoice_item, item: item)
       create(:invoice_item)
+      create(:invoice_item, item: item)
+      create(:invoice_item, item: item)
 
       get :index, item_id: item.id
       expect(json_response.count).to eq 2
