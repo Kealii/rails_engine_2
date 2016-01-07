@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       resources :customers,      only: [:index, :show] do
         resources :invoices,     only: [:index], controller: :customers_invoices
         resources :transactions, only: [:index], controller: :customers_transactions
+        get :favorite_merchant, controller: :customers_favorite_merchant, action: :index
         collection do
           get :find
           get :find_all
@@ -60,12 +61,12 @@ Rails.application.routes.draw do
           get :random
           get :most_revenue
           get :most_items
-          get :revenue,           controller: :total_merchant_revenue,      action: :index
+          get :revenue, controller: :total_merchant_revenue,      action: :index
         end
       end
 
-      resources :transactions,  only: [:index, :show] do
-        resources :invoice,     only: [:index], controller: :transactions_invoice
+      resources :transactions, only: [:index, :show] do
+        resources :invoice,    only: [:index], controller: :transactions_invoice
         collection do
           get :find
           get :find_all

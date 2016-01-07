@@ -6,13 +6,13 @@ RSpec.describe Api::V1::MerchantsFavoriteCustomerController, type: :controller d
   let!(:customer1) { FactoryGirl.create(:customer) }
 
   def customer_setup
-    item     = FactoryGirl.create(:item, merchant: merchant1)
-    invoice  = FactoryGirl.create(:invoice, merchant: merchant1, customer: customer1)
+    item    = FactoryGirl.create(:item, merchant: merchant1)
+    invoice = FactoryGirl.create(:invoice, merchant: merchant1, customer: customer1)
     FactoryGirl.create(:invoice_item, item: item, quantity: 4, unit_price: 2, invoice: invoice)
     FactoryGirl.create(:transaction, result: 'success', invoice: invoice)
 
     customer2 = FactoryGirl.create(:customer)
-    invoice  = FactoryGirl.create(:invoice, merchant: merchant1, customer: customer2)
+    invoice = FactoryGirl.create(:invoice, merchant: merchant1, customer: customer2)
     FactoryGirl.create(:invoice_item, item: item, quantity: 4, unit_price: 2, invoice: invoice)
     FactoryGirl.create(:transaction, result: 'expired', invoice: invoice)
   end
